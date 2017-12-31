@@ -1,2 +1,6 @@
 /node_modules
 package-lock.json
+src/package.json
+src/store/index.js
+src/yarn.lock
+yarn.lock
