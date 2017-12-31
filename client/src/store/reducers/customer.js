@@ -1,11 +1,9 @@
 import {GET_CUSTOMERS} from '../actions/constants'
 
-const customerReducer = (state = [], action) => {
-    switch (action.type) {
+const customerReducer = (state = [], {type, payload}) => {
+    switch (type) {
       case GET_CUSTOMERS:
-        return [
-          ...state
-        ]
+        return payload
       default:
         return state
     }
