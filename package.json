@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "concurrently": "^3.5.1",
-    "express": "^4.16.2"
+    "express": "^4.16.2",
+    "prop-types": "^15.6.0"
   }
 }
