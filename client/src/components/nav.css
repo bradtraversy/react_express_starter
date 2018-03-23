@@ -1,0 +1,44 @@
+/* Add a black background color to the top navigation */
+
+.topnav {
+    background-color: #134972;
+    overflow: hidden;
+}
+
+/* Style the links inside the navigation bar */
+img {
+    width: 30px;
+    height: 30px;
+    padding-right: 7px;
+}
+.topnav a {
+    display: inline-block;
+    color: white;
+    padding-top: 5px;
+    margin-right: 20px;
+    text-decoration: none;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 19px;
+    line-height: 250%;
+}
+
+a.token-name {
+    line-height: 35pt;
+    float: left;
+    margin-left: 200px;
+    font-size: 30px;
+    font-family: 'Mina', sans-serif;
+}
+
+/* Add an active class to highlight the current page */
+
+.active {
+    background-color: #134972;
+    color: white;
+}
+
+/* Hide the link that should open and close the topnav on small screens */
+
+.topnav .icon {
+    display: none;
+}
