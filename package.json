@@ -10,8 +10,7 @@
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
-  "author": "Brad Traversy",
-  "license": "MIT",
+  "author": "Jacob Lee",
   "devDependencies": {
     "nodemon": "^1.14.6"
   },

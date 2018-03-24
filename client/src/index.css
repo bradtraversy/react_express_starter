@@ -3,3 +3,12 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+.heading {
+  /*font-family: 'IBM Plex Sans', sans-serif;*/
+  font-family: 'Raleway', sans-serif;
+  /*font-family: 'Merriweather', serif;*/
+  /*font-family: 'Mina', sans-serif;*/
+  /*font-family: 'Playfair Display', serif;
+  font-family: 'PT Sans Narrow', sans-serif;*/
+}
