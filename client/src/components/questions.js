@@ -6,30 +6,60 @@ class Questions extends Component {
     super();
     this.state = {
       customers: [],
-      questions: ["Question1", "Question2", "Question3"],
-      options: [["Question11", "Question12", "Question13"],
-      ["Question21", "Question22", "Question23"],
-      ["Question31", "Question32", "Question33"]],
+      questions: [
+        "Вопрос 1. Является ли для вас важным помогать благотворительным организациям конкретного региона?",
+        "Вопрос 2. Если представить, что вам необходимо сразиться с чудищем, то какая философия воина вам ближе?",
+        "Вопрос 3. Кому вы симпатизируете больше, популярным и широко известным организациям или тем организациям, которые не так на слуху и и не получают внимания со стороны федеральных СМИ, несмотря на то, что делают хорошую работу?"],
+      options: [
+        [" Да, для меня важно помогать организациям своего региона",
+          " Нет, мне более важна тематика, которой занимается организация",
+          " Хочу помогать региональным организациям, которые получают сейчас меньше всего поддержки"],
+        [" Пришел, увидел, победил. Потому что для меня важно видеть результат здесь и сейчас",
+          "  Я терпеливый человек, могу и подождать. Как сказал Лао Дзы: сядь на берегу реки, и вскоре ты увидишь, как мимо тебя проплывает труп твоего врага.",
+          " ? промежуточный вариант"],
+        [" Пожалуй, я за “народный выбор”, чем организация известнее, тем больше доверия она вызывает",
+          " Все равно мы выбираем только из проверенных фондов, поэтому я с удовольствием поддержку организацию, которая совсем не снискала медийной славы, но при этом хорошо делает свою работу",
+          " А можно выбрать середнячка?"]],
       counter: 0,
-      lastButton: false
-
+      lastButton: false,
+      choises: []
     };
-
     this.handleClickNextButton = this.handleClickNextButton.bind(this);
     this.handleClickLastButton = this.handleClickLastButton.bind(this);
   }
 
+  findSelection(field) {
+    const values = document.getElementsByName(field);
+    for (var i = 0; i < values.length; i++) {
+      if (values[i].checked) {
+        return values[i].value;
+      }
+    }
+    return 0;
+  }
 
   handleClickNextButton() {
-    this.setState(state => ({
-      counter: this.state.counter + 1
-    }));
+    this.setState(({ choises, counter }) => {
+      const copyChoises = choises;
+      copyChoises.push(this.findSelection("dzen"));
+      counter++;
+      return {
+        choises: copyChoises,
+        counter
+      }
+    });
   }
 
   handleClickLastButton() {
-    this.setState(state => ({
-      lastButton: true
-    }));
+    this.setState(({ choises, lastButton }) => {
+      const copyChoises = choises;
+      copyChoises.push(this.findSelection("dzen"));
+      lastButton = true;
+      return {
+        choises: copyChoises,
+        lastButton
+      }
+    });
   }
 
   componentDidMount() {
@@ -38,11 +68,11 @@ class Questions extends Component {
       .then(customers => this.setState({ customers }, () => console.log('Customers fetched...', customers)));
   }
 
-
   showResults() {
     return (
       <div>
         <h2>Results</h2>
+        <h1>{this.state.choises}</h1>
       </div>
     )
   }
@@ -60,8 +90,8 @@ class Questions extends Component {
               <p className="qu">{this.state.questions[this.state.counter]}</p>
               {this.state.options[this.state.counter].map((question, id) =>
                 <p className="answ">
-                  <label for="dzen"></label>
-                  <input name="dzen" type="radio" value={id} /> 
+                  <label htmlFor="dzen"></label>
+                  <input name="dzen" type="radio" value={id} />
                   {question}</p>
               )}
 
@@ -75,8 +105,6 @@ class Questions extends Component {
                   </button>}
               </div>
             </div>
-
-
 
         }
       </div>
