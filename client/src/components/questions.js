@@ -8,27 +8,25 @@ class Questions extends Component {
       customers: [],
       questions: ["Question1", "Question2", "Question3"],
       options: [["Question11", "Question12", "Question13"],
-                  ["Question21", "Question22", "Question23"],
-                  ["Question31", "Question32", "Question33"]],
+      ["Question21", "Question22", "Question23"],
+      ["Question31", "Question32", "Question33"]],
       counter: 0,
       lastButton: false
-        
+
     };
 
     this.handleClickNextButton = this.handleClickNextButton.bind(this);
     this.handleClickLastButton = this.handleClickLastButton.bind(this);
   }
 
-  
-  handleClickNextButton()
-  {
+
+  handleClickNextButton() {
     this.setState(state => ({
       counter: this.state.counter + 1
     }));
   }
-  
-  handleClickLastButton() 
-  {
+
+  handleClickLastButton() {
     this.setState(state => ({
       lastButton: true
     }));
@@ -37,51 +35,53 @@ class Questions extends Component {
   componentDidMount() {
     fetch('/api/customers')
       .then(res => res.json())
-      .then(customers => this.setState({customers}, () => console.log('Customers fetched...', customers)));
+      .then(customers => this.setState({ customers }, () => console.log('Customers fetched...', customers)));
   }
 
-  
-  showResults()
-  {
+
+  showResults() {
     return (
-    <div>
+      <div>
         <h2>Results</h2>
-    </div>
-    ) 
+      </div>
+    )
   }
 
   render() {
-    const showLastButton = (this.state.counter == this.state.options.length - 1);
+    const showLastButton = (this.state.counter === this.state.options.length - 1);
     return (
-        <div>
+      <div className="all-wrapper">
         {
-            this.state.lastButton ?
+          this.state.lastButton ?
             <div>
-                {this.showResults()}
-            </div>:
-            <div>
-                <h2>{this.state.questions[this.state.counter]}</h2>
-                {this.state.options[this.state.counter].map((question, id) => 
-                    <p><input name="dzen" type="radio" value={id} />{question}</p>
-                )}
+              {this.showResults()}
+            </div> :
+            <div className="qu-answ-wrapper">
+              <p className="qu">{this.state.questions[this.state.counter]}</p>
+              {this.state.options[this.state.counter].map((question, id) =>
+                <p className="answ">
+                  <label for="dzen"></label>
+                  <input name="dzen" type="radio" value={id} /> 
+                  {question}</p>
+              )}
 
-                <div>{
+              <div>{
                 showLastButton ?
-                    <button onClick = {this.handleClickLastButton}>
+                  <button className="btn main-button" onClick={this.handleClickLastButton}>
                     FINISH!
                     </button> :
-                    <button onClick = {this.handleClickNextButton}>
+                  <button className="btn main-button" onClick={this.handleClickNextButton}>
                     Next question {this.state.counter + 1}
-                    </button>}
-                </div>
+                  </button>}
+              </div>
             </div>
- 
+
 
 
         }
-        </div>
+      </div>
     );
-    }
+  }
 }
 
 export default Questions;
