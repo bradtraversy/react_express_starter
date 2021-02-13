@@ -11,27 +11,50 @@ class Questions extends Component {
                   ["Question21", "Question22", "Question23"],
                   ["Question31", "Question32", "Question33"]],
       counter: 0,
-      lastButton: false
-        
+      lastButton: false,
+      choises: []
     };
-
     this.handleClickNextButton = this.handleClickNextButton.bind(this);
     this.handleClickLastButton = this.handleClickLastButton.bind(this);
   }
-
+ 
+ findSelection(field) 
+ {
+    const values = document.getElementsByName(field);
+    for (var i = 0; i < values.length; i++) 
+    {
+        if (values[i].checked) 
+        {
+            return values[i].value;
+        }
+    }
+    return 0;
+ }
   
   handleClickNextButton()
   {
-    this.setState(state => ({
-      counter: this.state.counter + 1
-    }));
+    this.setState(({choises, counter}) => {
+        const copyChoises = choises;
+        copyChoises.push(this.findSelection("dzen"));
+        counter++;
+        return {
+            choises: copyChoises,
+            counter
+        }
+    });
   }
   
   handleClickLastButton() 
   {
-    this.setState(state => ({
-      lastButton: true
-    }));
+    this.setState(({choises, lastButton}) => {
+    const copyChoises = choises;
+    copyChoises.push(this.findSelection("dzen"));
+    lastButton = true;
+    return {
+        choises: copyChoises,
+        lastButton
+    }
+    });
   }
 
   componentDidMount() {
@@ -40,18 +63,18 @@ class Questions extends Component {
       .then(customers => this.setState({customers}, () => console.log('Customers fetched...', customers)));
   }
 
-  
   showResults()
   {
     return (
     <div>
         <h2>Results</h2>
+        <h1>{this.state.choises}</h1>
     </div>
     ) 
   }
 
   render() {
-    const showLastButton = (this.state.counter == this.state.options.length - 1);
+    const showLastButton = (this.state.counter === this.state.options.length - 1);
     return (
         <div>
         {
@@ -75,8 +98,6 @@ class Questions extends Component {
                     </button>}
                 </div>
             </div>
- 
-
 
         }
         </div>
