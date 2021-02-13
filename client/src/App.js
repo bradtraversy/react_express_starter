@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Customers from './components/customers';
+import Quiz from './components/quiz';
 
 class App extends Component {
   render() {
@@ -12,6 +13,7 @@ class App extends Component {
           <h1 className="App-title">React Express Starter</h1>
         </header>
         <Customers />
+        <Quiz />
       </div>
     );
   }
