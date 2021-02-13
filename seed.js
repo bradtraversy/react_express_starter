@@ -1,41 +1,89 @@
-const express = require('express');
-require('dotenv').config();
+const mongoose = require('mongoose');
+const fetch = require('node-fetch');
 const Tag = require('./models/Tag');
+const Fond = require('./models/Fond');
 
-const app = express();
-const port = 5000;
+require('dotenv').config();
 
-app.listen(port, () => `Server running on port ${port}`);
+// поиск всех слагов
 
+const findSlugs = async () => {
+  const tags = await Tag.find();
+  const slugs = [];
+
+  tags.forEach((el) => {
+    slugs.push(el.slug);
+  });
+
+  return slugs;
+}
+
+// фетч и запись объектов в БД
 
 const token = process.env.HELP_TOKEN
 
-const getHelpNeeded = async () => {
-
-  const query = `organizations?org_cats=all&&is_verify=1&token=${token}`;
-  const base = `https://dev.nko.tochno.st/api/`;
+const getHelpNeededTags = async () => {
   const path = `https://dev.nko.tochno.st/api/list/problems?token=${token}`;
-  const path2 = `https://dev.nko.tochno.st/api/organizations?problem_path=hiv&org_cats=all&is_verify=1&token=${token}`;
-
-  const response0 = await fetch(base + query);
-  const data0 = await response0.json();
 
   const response = await fetch(path);
   const data = await response.json();
 
-  const response2 = await fetch(path2);
-  const data2 = await response2.json();
+  return data;
+}
 
-  console.log('Help Needed API', data0, data, data2);
+const getHelpNeededFonds = async () => {
+  const query = `organizations?org_cats=all&&is_verify=1&token=${token}`;
+  const base = `https://dev.nko.tochno.st/api/`;
+
+  const response = await fetch(base + query);
+  const data = await response.json();
 
   return data;
 }
 
+const getFondsBySlug = async (slug) => {
 
-try {
-	const data = getHelpNeeded();
-	console.log(data);
+
+  const path = `https://dev.nko.tochno.st/api/organizations?problem_path=${slug}&org_cats=all&is_verify=1&token=${token}`;
+
+  const response = await fetch(path);
+  const data = await response.json();
+
+  return data;
 }
-catch(err){
-   console.log(err);
+
+const seedTags = async () => {
+  try {
+    const data = await getHelpNeededTags();
+
+    data.map((elem) => {
+      const tag = new Tag({ ...elem });
+      tag.save();
+    });
+
+  }
+  catch (err) {
+    console.log(err);
+  }
 }
+
+const seedFondsBySlug = async (i) => {
+  const slugs = await findSlugs();
+
+  try {
+    const data = await getFondsBySlug(slugs[i]);
+
+    // console.log(data.data);
+
+    data.data.map((elem) => {
+      const fond = new Fond({ slug: slugs[i], api_id: elem.id, ...elem });
+      fond.save();
+    });
+
+  }
+  catch (err) {
+    console.log(err);
+  }
+}
+
+module.exports = { seedTags, seedFondsBySlug, findSlugs, getFondsBySlug };
