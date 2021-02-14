@@ -22,17 +22,19 @@ class Questions extends Component {
           " А можно выбрать середнячка?"]],
       counter: 0,
       lastButton: false,
+      showFirstPage: true,
       choises: []
     };
     this.handleClickNextButton = this.handleClickNextButton.bind(this);
     this.handleClickLastButton = this.handleClickLastButton.bind(this);
+    this.skipQuestion = this.skipQuestion.bind(this);
   }
 
   findSelection(field) {
     const values = document.getElementsByName(field);
     for (var i = 0; i < values.length; i++) {
       if (values[i].checked) {
-        return values[i].value;
+        return parseInt(values[i].value) + 1;
       }
     }
     return 0;
@@ -62,12 +64,42 @@ class Questions extends Component {
     });
   }
 
+  skipQuestion(){
+      this.setState(({ choises, counter }) => {
+      const copyChoises = choises;
+      copyChoises.push(-1);
+      counter++;
+      return {
+        choises: copyChoises,
+        counter
+      }
+    });
+  }
+
   componentDidMount() {
     fetch('/api/customers')
       .then(res => res.json())
       .then(data => {
         console.log('data fetched:', data);
       });
+  }
+
+  doShowFirstPage()
+  {
+    return(
+     <div className="all-wrapper">
+      <p><h1>Как определиться кому помогать?</h1></p><br />
+      <p><h3>Выбрать кому помогать может быть сложно, ведь существует много различных проблем, которые мы стремимся решить, много вариантов получателей помощи и много организаций. Мы сделали этот тест, чтобы помочь вам в этом. 
+        Если вопрос покажется вам слишком сложным, вы всегда можете нажать “пропустить”. После завершения теста мы предложим вам несколько организаций исходя из ваших ответов. Все они проверены и смогут эффективно распоряжаться вашими средствами.
+      </h3></p>
+      <button className="btn main-button" onClick={() => this.setState({ showFirstPage:false })}>
+        Пройти тест
+      </button>
+      <button className="btn main-button" onClick={() => this.setState({ lastButton:true, showFirstPage:false })}>
+        Мне повезёт!
+      </button>
+     </div>
+    )
   }
 
   showResults() {
@@ -87,7 +119,11 @@ class Questions extends Component {
     return (
       <div>
         <h2>Results</h2>
-        <h1>{this.state.choises}</h1>
+        <h1>{
+            this.state.choises.length === 0 ?
+            "Выводим рандом" : 
+            this.state.choises}
+        </h1>
       </div>
     )
   }
@@ -95,7 +131,10 @@ class Questions extends Component {
   render() {
     const showLastButton = (this.state.counter === this.state.options.length - 1);
     return (
-      <div className="all-wrapper">
+     this.state.showFirstPage ?
+        this.doShowFirstPage()
+        :
+        <div className="all-wrapper">
         {
           this.state.lastButton ?
             <div>
@@ -110,14 +149,21 @@ class Questions extends Component {
                   {question}</p>
               )}
 
-              <div>{
+              <div>
+              {
                 showLastButton ?
                   <button className="btn main-button" onClick={this.handleClickLastButton}>
                     FINISH!
                     </button> :
+                  <div>
                   <button className="btn main-button" onClick={this.handleClickNextButton}>
-                    Next question {this.state.counter + 1}
-                  </button>}
+                    Следующий вопрос {this.state.counter + 1} / {this.state.options.length}
+                  </button>
+                  <button className="btn main-button" onClick={this.skipQuestion}>
+                    Пропустить вопрос
+                  </button>
+                  </div>
+              }
               </div>
             </div>
 
