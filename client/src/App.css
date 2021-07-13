@@ -1,28 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Jomhuria&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Arvo&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200&display=swap');
 .App {
   text-align: center;
+  align-items: center;
 }
 
-.App-logo {
+/* .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 80px;
+} */
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-gap: 20px;
 }
 
 .App-header {
-  background-color: #222;
-  height: 150px;
+  background-color: rgb(243,247,249);
+  /* height: 150px; */
   padding: 20px;
-  color: white;
+  color: black;
 }
 
 .App-title {
-  font-size: 1.5em;
+  font-size: 4.5em;
+  color: rgb(29,161,242);
+  font-family: 'Jomhuria', cursive;
+  font-weight: normal;
+  margin: auto;
 }
 
 .App-intro {
   font-size: large;
+  font-family: 'Arvo', serif;
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.examples {
+  padding: 40px;
 }
+
+.gzm {
+  color: black;
+  /* border-bottom: 1px solid rgb(22,32,44); */
+  font-family: "Inter",sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  max-width: 500px;
+  line-height: 26.5px;
+}
+
+@media only screen and (min-width: 600px) {
+  .examples {
+    padding: 80px;
+  }
+}
+
+
+@media screen and (max-width: 380px) {
+  .grid-container {
+    grid-template-columns: auto;
+  }
+}
+
