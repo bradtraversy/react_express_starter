@@ -1,0 +1,108 @@
+.Checkboxes {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+      Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  }
+
+  .slider {
+    margin: auto;
+    width: 380px;
+    /* border: 5px solid black; */
+    padding: 10px;
+  }
+
+  .buttonContainer {
+    padding: 5px;
+  }
+
+  .buttonWiderContainer {
+    /* padding: 5px; */
+    display: grid;
+    grid-template-columns: 105px 1fr;
+    grid-gap: 8px;
+  }
+
+  .banner-follow {
+    text-align: left;
+    color: rgb(22,32,44);
+    font-size: 45px;
+    margin-block-end: 0px;    
+    font-family: "Inter",sans-serif;
+    display: block;
+    font-size: 2em;
+    margin-block-start: 0.67em;
+    margin-block-end: 0.67em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+  }
+
+.lower-banner {
+    color: rgb(99,117,131);
+    font-weight: 500;
+    font-size: 18px;
+    max-width: 500px;
+    line-height: 26.5px;
+  }
+  
+  li {
+    font-size: 1.3rem;
+    font-weight: 500;
+    font-family: "Inter",sans-serif;
+  }
+  .member {
+    margin-top: 0.3rem;
+    vertical-align: text-bottom;
+  }
+  
+  .result {
+    margin-top: 1rem;
+  }
+  
+  .member-list,
+  .total {
+    width: 30%;
+    margin: 0 auto;
+  }
+  
+  .member-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .member-list li {
+    margin-bottom: 0.5rem;
+  }
+  
+  .members-list-item {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  /* .members-list li:last-child {
+    border-top: 1px solid #ccc;
+    margin-top: 1rem;
+    padding-top: 1rem;
+  } */
+  
+  .members-list-item label {
+    /* vertical-align: text-bottom; */
+    margin-left: 0.2rem;
+  }
+  
+  .total {
+    margin-top: 1rem;
+  }
+  
+  @media screen and (max-width: 900px) {
+    .slider {
+        width: 80%;
+    }
+    .members-list,
+    .total {
+      width: 90%;
+    }
+    li {
+        font-size: 1rem;
+      }
+  }
+  
